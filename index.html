@@ -424,6 +424,15 @@ function renderEvidence(){
  $('evidence-delta').textContent=compareText(initialEvidence);
  $('evidence-details').innerHTML=initialEvidence.map(item=>`<details><summary>${esc(item.reading.record_date)} 원자료·저장값·화면값</summary>${comparisonHTML(item)}</details>`).join('');
 }
+// T05: pure CSV serialization. UI integration is the next handoff step.
+function buildRealRecordsCSV(readings) {
+ const headers=['날짜','기온','단위','출처','출처 URL','출처 시각','조회 시각'];
+ const quote=value=>{const text=String(value ?? '');return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text};
+ const sorted=[...readings].sort((a,b)=>a.record_date.localeCompare(b.record_date));
+ const rows=sorted.map(r=>[r.record_date,r.normalized_value,r.unit,r.source_name,r.source_url,r.source_time,r.fetched_at]);
+ return '\uFEFF'+[headers,...rows].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n';
+}
+
 function download(filename,body,type){const url=URL.createObjectURL(new Blob([body],{type}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function exportHTML(){
  if(!live.daily_readings.length){showToast('먼저 실제 데이터 조회를 성공시켜 주세요.');return}

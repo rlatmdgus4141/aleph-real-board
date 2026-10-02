@@ -1,0 +1,58 @@
+{
+  "executed_at": "2026-10-01T02:57:47.097Z",
+  "environment": "Node.js v24.19.0 / DOM shim (not real browser)",
+  "passed": 0,
+  "total": 10,
+  "results": [
+    {
+      "id": "CSV-01",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-02",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-03",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-04",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-05",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-06",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-07",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-08",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-09",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    },
+    {
+      "id": "CSV-10",
+      "status": "FAIL",
+      "reason": "CSV 다운로드 버튼(export-csv)이 아직 없음"
+    }
+  ]
+}
