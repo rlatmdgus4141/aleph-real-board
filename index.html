@@ -33,7 +33,7 @@
 </section>
 <section id="view-evidence" role="tabpanel" aria-labelledby="tab-evidence">
 <article class="panel"><h2>공개본에 보존된 실제 기록</h2><p class="help">아래 기록은 이 HTML 파일에 포함된 고정 사본입니다. 다른 사람이 새 시크릿 창으로 열어도 보입니다. 방문자의 실제 조회나 합성 시험으로 바뀌지 않습니다.</p><div id="evidence-summary" class="notice info">이 공개본에 포함된 실제 기록 1건 / 필요한 기록 2건. 실제 조회 후 공개본을 내려받아 갱신하세요.</div><div class="table-wrap" id="evidence-table"></div><p id="evidence-delta" class="delta">비교할 기록이 부족합니다. 다른 실제 KST 날짜의 기록이 필요합니다.</p><div id="evidence-details"></div></article>
-<article class="panel"><h2>오늘 기록을 다음 날까지 보관하기</h2><p>실제 조회에 성공한 뒤 공개본을 내려받으세요. 다른 실제 KST 날짜에 다시 조회하고 공개본을 다시 내려받으면 두 날짜의 기록을 함께 보존합니다.</p><div class="actions"><button class="primary" id="export-html">기록 포함 공개본 HTML 내려받기</button><button id="export-json">실제 기록 JSON 내려받기</button></div><p class="help">공개본은 현재 기록 중 최신 두 날짜를 포함하며 파일 이름은 index.html입니다. GitHub Pages에 이 파일을 올리면 됩니다. 기록은 공개 날씨 데이터만 포함합니다.</p><div class="notice">ALEPH 공식 계약은 서로 다른 실제 날짜의 <strong>t04_day 과정 영수증 2건</strong>도 요구합니다. 이 앱은 플랫폼 영수증을 발급하거나 대체하지 않습니다. 플랫폼에서 기록 절차를 확인하고, 영수증의 값·출처 시각과 동일한 기록을 보존해 주세요. 확정 후 같은 날짜 값을 갱신하면 영수증과 달라질 수 있으므로 확정한 공개본은 별도로 보관하세요.</div><details><summary>오늘의 플랫폼 대조용 payload (영수증 아님)</summary><pre id="receipt-payload">{
+<article class="panel"><h2>오늘 기록을 다음 날까지 보관하기</h2><p>실제 조회에 성공한 뒤 공개본을 내려받으세요. 다른 실제 KST 날짜에 다시 조회하고 공개본을 다시 내려받으면 두 날짜의 기록을 함께 보존합니다.</p><div class="actions"><button class="primary" id="export-html">기록 포함 공개본 HTML 내려받기</button><button id="export-json">실제 기록 JSON 내려받기</button><button id="export-csv">실제 일별 기록 CSV 내려받기</button></div><p class="help">공개본은 현재 기록 중 최신 두 날짜를 포함하며 파일 이름은 index.html입니다. GitHub Pages에 이 파일을 올리면 됩니다. 기록은 공개 날씨 데이터만 포함합니다.</p><div class="notice">ALEPH 공식 계약은 서로 다른 실제 날짜의 <strong>t04_day 과정 영수증 2건</strong>도 요구합니다. 이 앱은 플랫폼 영수증을 발급하거나 대체하지 않습니다. 플랫폼에서 기록 절차를 확인하고, 영수증의 값·출처 시각과 동일한 기록을 보존해 주세요. 확정 후 같은 날짜 값을 갱신하면 영수증과 달라질 수 있으므로 확정한 공개본은 별도로 보관하세요.</div><details><summary>오늘의 플랫폼 대조용 payload (영수증 아님)</summary><pre id="receipt-payload">{
   "source_url": "https://api.open-meteo.com/v1/forecast?latitude=37.5665&amp;longitude=126.9780&amp;current=temperature_2m&amp;timezone=Asia%2FSeoul",
   "source_observed_at": "2026-10-01T10:00+09:00",
   "normalized_value": 17.3,
@@ -424,7 +424,7 @@ function renderEvidence(){
  $('evidence-delta').textContent=compareText(initialEvidence);
  $('evidence-details').innerHTML=initialEvidence.map(item=>`<details><summary>${esc(item.reading.record_date)} 원자료·저장값·화면값</summary>${comparisonHTML(item)}</details>`).join('');
 }
-// T05: pure CSV serialization. UI integration is the next handoff step.
+// T05: pure CSV serialization (function by AI A); button wiring below in exportRealRecordsCSV (AI B).
 function buildRealRecordsCSV(readings) {
  const headers=['날짜','기온','단위','출처','출처 URL','출처 시각','조회 시각'];
  const quote=value=>{const text=String(value ?? '');return /[",\r\n]/.test(text)?'"'+text.replace(/"/g,'""')+'"':text};
@@ -433,6 +433,11 @@ function buildRealRecordsCSV(readings) {
  return '\uFEFF'+[headers,...rows].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n';
 }
 
+function exportRealRecordsCSV(){
+ // Real records only: live.daily_readings. Replay/synthetic state is never read.
+ if(!live.daily_readings.length){showToast('내려받을 실제 기록이 없습니다');return}
+ download('seoul-real-records.csv',buildRealRecordsCSV(live.daily_readings.map(row=>row.reading)),'text/csv;charset=utf-8');
+}
 function download(filename,body,type){const url=URL.createObjectURL(new Blob([body],{type}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function exportHTML(){
  if(!live.daily_readings.length){showToast('먼저 실제 데이터 조회를 성공시켜 주세요.');return}
@@ -448,6 +453,7 @@ document.querySelector('[role="tablist"]').onkeydown=e=>{if(!['ArrowLeft','Arrow
 $('fixture-buttons').replaceChildren();
 for(const [id,label]of Object.entries(labels)){const b=document.createElement('button');b.textContent=label;const sub=document.createElement('small');sub.textContent=id;b.appendChild(sub);b.onclick=()=>runReplay(id);$('fixture-buttons').appendChild(b)}
 $('fetch-live').onclick=fetchLive;$('retry-replay').onclick=()=>runReplay('T04-RECOVER-D2');$('reset-replay').onclick=()=>{replay=Core.resetEvaluationState();renderReplay()};$('run-all').onclick=allTests;$('export-html').onclick=exportHTML;
+$('export-csv').onclick=exportRealRecordsCSV;
 $('export-json').onclick=()=>{if(!live.daily_readings.length){showToast('실제 조회 기록이 없습니다.');return}download('seoul-real-records.json',JSON.stringify({kind:'live-public-weather-records-not-platform-receipts',records:bundles().slice(-2)},null,2),'application/json')};
 $('replay-pending').textContent='';$('test-results').textContent='아직 실행하지 않았습니다.';
 restore();renderLive();renderReplay();renderEvidence();setTab('live');verifyAssets();

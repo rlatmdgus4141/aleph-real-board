@@ -1,0 +1,48 @@
+{
+  "executed_at": "2026-10-02T00:32:41.006Z",
+  "environment": "Node.js v22.22.0 / DOM shim (not real browser)",
+  "passed": 10,
+  "total": 10,
+  "results": [
+    {
+      "id": "CSV-01",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-02",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-03",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-04",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-05",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-06",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-07",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-08",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-09",
+      "status": "PASS"
+    },
+    {
+      "id": "CSV-10",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "executed_at": "2026-10-02T00:33:42.720Z",
+  "browser": "141.0.7390.37",
+  "checks": [
+    {
+      "id": "B1-download",
+      "status": "PASS",
+      "detail": {
+        "filename": "seoul-real-records.csv",
+        "lines": [
+          "날짜,기온,단위,출처,출처 URL,출처 시각,조회 시각",
+          "2026-09-30,24,°C,Open-Meteo · 서울 모델 기반 현재 기온,https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&current=temperature_2m&timezone=Asia%2FSeoul,2026-09-30T14:15+09:00,2026-09-30T05:27:23.290Z",
+          "2026-10-01,17.3,°C,Open-Meteo · 서울 모델 기반 현재 기온,https://api.open-meteo.com/v1/forecast?latitude=37.5665&longitude=126.9780&current=temperature_2m&timezone=Asia%2FSeoul,2026-10-01T10:00+09:00,2026-10-01T01:05:32.854Z"
+        ]
+      }
+    },
+    {
+      "id": "B1-no-page-error",
+      "status": "PASS",
+      "detail": []
+    },
+    {
+      "id": "B2-empty",
+      "status": "PASS",
+      "detail": {
+        "toast": "내려받을 실제 기록이 없습니다",
+        "downloaded": false
+      }
+    },
+    {
+      "id": "B3-public-html-keeps-csv",
+      "status": "PASS",
+      "detail": {
+        "htmlName": "index.html",
+        "csvName": "seoul-real-records.csv",
+        "errs": []
+      }
+    },
+    {
+      "id": "B4-json-still-works",
+      "status": "PASS",
+      "detail": {
+        "name": "seoul-real-records.json",
+        "n": 2
+      }
+    },
+    {
+      "id": "B4-synthetic-excluded",
+      "status": "PASS",
+      "detail": {
+        "rows": 3
+      }
+    }
+  ],
+  "passed": 6,
+  "total": 6
+}
